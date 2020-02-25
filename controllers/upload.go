@@ -2,7 +2,8 @@ package controllers
 
 import (
     "fmt"
-    "io/ioutil"
+	"io/ioutil"
+	"os"
 	"github.com/astaxie/beego"
 )
 
@@ -31,7 +32,12 @@ func (this *UploadController) UploadFile() {
 	fmt.Printf("Uploaded File: %+v\n", handler.Filename)
 	fmt.Printf("File Size: %+v\n", handler.Size)
 	fmt.Printf("MIME Header: %+v\n", handler.Header)
-
+	//Create storage path
+	fmt.Println("Create dir")
+	err = os.MkdirAll("./storage/gallery", 0755)
+	if err != nil {
+		fmt.Println(err)
+	}
 	// Create a temporary file within our temp-images directory that follows
 	// a particular naming pattern
 	tempFile, err := ioutil.TempFile("./storage/gallery", "upload-*.png")
