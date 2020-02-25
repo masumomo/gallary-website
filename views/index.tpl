@@ -6,13 +6,14 @@
   <body>
     <h1>Hello World</h1>
     <table border="1" style="width:100%;">
-      {{ range.employees }}
-      <tr>
-        <td>{{.ID}}</td>
-        <td>{{.FirstName}}</td>
-        <td>{{.LastName}}</td>
-      </tr>
-      {{ end }}
+      	{{ with .Photos }}
+          {{ range . }}
+      			<tr>
+              	<td>{{ .Name }}</td>
+              	<td> <img src="data:image/jpg;base64,{{.Src}}" alt="image"></td>
+      			</tr>
+			{{ end }} 
+			{{ end }} 
     </table>
   </body>
 </html>

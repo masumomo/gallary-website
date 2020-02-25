@@ -26,6 +26,5 @@ func (this *MainController) Prepare() {
 }
 
 func (this *MainController) Get() {
-    this.Data["employees"] = employees
 	this.TplName = "owner.tpl"
 }

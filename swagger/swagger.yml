@@ -1,8 +1,3 @@
 swagger: "2.0"
-info:
-  version: "1.0.0"
-  title: ConnectSpiral
-host: "localhost:9092"
-basePath: "/v1/spiral"
-schemes:
-  - http
+info: {}
+paths: {}

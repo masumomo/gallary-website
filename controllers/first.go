@@ -1,35 +1,55 @@
 package controllers
 
-import "github.com/astaxie/beego"
+import (
+    "fmt"
+    "github.com/astaxie/beego"
+    "io/ioutil"
+    "bufio"
+    "encoding/base64"
+    "os"
+)
 
 type FirstController struct {
     beego.Controller
 }
 
-type Employee struct {
-    ID        int    `json:"id"`
-    FirstName string `json:"firstName"`
-    LastName  string `json:lastName`
+type Photo struct {
+    ID int `json:"id"`
+    Name string `json:"name"`
+    Src string `json:"src"`
 }
 
-type Employees []Employee
+type Photos []Photo
 
-var employees []Employee
+var photos []Photo
 
 func init() {
-    employees = Employees{
-        Employee{ID: 1, FirstName: "Foo", LastName: "Bar"},
-        Employee{ID: 2, FirstName: "Baz", LastName: "Qux"},
+    files, _ := ioutil.ReadDir("./storage/gallery")
+
+    fmt.Println(files)
+    for _, file := range files {
+        filename := file.Name()
+        f, err := os.Open("./storage/gallery/" + filename) 
+        reader := bufio.NewReader(f)
+        content, _ := ioutil.ReadAll(reader)
+        encoded := base64.StdEncoding.EncodeToString(content)
+        defer f.Close()
+        if err != nil {
+            return
+        }
+        fmt.Println(filename)
+        photos = append(photos,Photo{ID: 1, Name: filename, Src: encoded})
+
     }
 }
 
-func (this *FirstController) GetEmployees() {
+func (this *FirstController) GetPhotos() {
     this.Ctx.ResponseWriter.WriteHeader(200)
-    this.Data["json"] = employees
+    this.Data["json"] = photos
     this.ServeJSON()
 }
 
 func (this *FirstController) IndexPage() {
-    this.Data["employees"] = employees
+    this.Data["Photos"] = photos
     this.TplName = "index.tpl"
 }
