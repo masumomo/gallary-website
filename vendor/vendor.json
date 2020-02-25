@@ -3,6 +3,12 @@
 	"ignore": "test",
 	"package": [
 		{
+			"checksumSHA1": "u8mcCOF00kIEi/7UMYtk6t27B3s=",
+			"path": "github.com/abbot/go-http-auth",
+			"revision": "860ed7f246ff5abfdbd5c7ce618fd37b49fd3d86",
+			"revisionTime": "2018-10-19T20:19:20Z"
+		},
+		{
 			"checksumSHA1": "kRkOuhZe3cM+4fXQAJMN7ubpFl4=",
 			"path": "github.com/astaxie/beego",
 			"revision": "8f3d1c5f42fce57e83e1c3f7d180477595db7cca",
@@ -75,6 +81,24 @@
 			"path": "golang.org/x/crypto/acme/autocert",
 			"revision": "8f3d1c5f42fce57e83e1c3f7d180477595db7cca",
 			"revisionTime": "2020-02-22T07:09:25Z"
+		},
+		{
+			"checksumSHA1": "oCH3J96RWvO8W4xjix47PModpio=",
+			"path": "golang.org/x/crypto/bcrypt",
+			"revision": "2aa609cf4a9d7d1126360de73b55b6002f9e052a",
+			"revisionTime": "2020-01-20T01:10:41Z"
+		},
+		{
+			"checksumSHA1": "q+XI9g44wd9mYvf3S5Wo8YZjAus=",
+			"path": "golang.org/x/crypto/blowfish",
+			"revision": "2aa609cf4a9d7d1126360de73b55b6002f9e052a",
+			"revisionTime": "2020-01-20T01:10:41Z"
+		},
+		{
+			"checksumSHA1": "GtamqiJoL7PGHsN454AoffBFMa8=",
+			"path": "golang.org/x/net/context",
+			"revision": "5a598a2470a0279bd28bab287167dc1ef0813153",
+			"revisionTime": "2020-02-21T11:14:35Z"
 		},
 		{
 			"checksumSHA1": "ZSWoOPUNRr5+3dhkLK3C4cZAQPk=",
