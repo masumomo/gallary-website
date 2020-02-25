@@ -3,3 +3,4 @@
 /vendor/gopkg*
 
 firstBee
+.DS_Store
