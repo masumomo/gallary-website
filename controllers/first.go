@@ -25,8 +25,11 @@ var photos []Photo
 
 func init() {
     files, _ := ioutil.ReadDir("./storage/gallery")
-
+    files1, _ := ioutil.ReadDir(".")
+    files2, _ := ioutil.ReadDir("./storage")
     fmt.Println(files)
+    fmt.Println(files1)
+    fmt.Println(files2)
     for _, file := range files {
         filename := file.Name()
         f, err := os.Open("./storage/gallery/" + filename) 
