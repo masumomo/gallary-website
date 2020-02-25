@@ -26,7 +26,6 @@ func (this *MainController) Prepare() {
 }
 
 func (this *MainController) Get() {
-	this.Data["Username"] = "astaxie"
-	this.Data["Email"] = "astaxie@gmail.com"
-	this.TplName = "login.tpl"
+    this.Data["employees"] = employees
+	this.TplName = "owner.tpl"
 }
