@@ -36,6 +36,7 @@ func init() {
 	if err != nil {
 		fmt.Println("Error loading .env file")
 	}
+	MangoUrl := os.Getenv("MONGODB_URI")
 	if MangoUrl == "" {
 		fmt.Println("MangoUrl is empty")
 		MONGODB := os.Getenv("MONGODB")
