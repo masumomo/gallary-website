@@ -268,12 +268,6 @@
 			"revisionTime": "2020-02-24T15:14:23Z"
 		},
 		{
-			"checksumSHA1": "j+/g26T4t2DjbeyA8EWuD4hOeZk=",
-			"path": "github.com/mongodb/mongo-go-driver/mongo",
-			"revision": "75a2cc36a64ee1bedcf50ff0e956edbad778477e",
-			"revisionTime": "2020-02-24T15:14:23Z"
-		},
-		{
 			"checksumSHA1": "Uy1A2Mv1zW4yURQdwvNpULvD7To=",
 			"origin": "go.mongodb.org/mongo-driver/vendor/github.com/pkg/errors",
 			"path": "github.com/pkg/errors",
