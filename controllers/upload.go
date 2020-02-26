@@ -60,8 +60,8 @@ func (this *UploadController) UploadFile() {
 	MangoUrl := os.Getenv("MONGODB_URI")
     if MangoUrl == "" {
         MONGODB :=os.Getenv("MONGODB")
-        DBUser := os.Getenv("DB_USER")
-        DBPass := os.Getenv("DB_PASS")
+        DBUser := os.Getenv("MONGO_DB_USER")
+        DBPass := os.Getenv("MONGO_DB_PASS")
         MangoUrl = "mongodb://" + DBUser + ":" + DBPass + "@" + MONGODB + "heroku_1vxk1j6t"
     }
     fmt.Println(MangoUrl)

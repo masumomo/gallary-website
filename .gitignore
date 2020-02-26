@@ -1,5 +1,4 @@
-/vendor/github*
-/vendor/go*
+/vendor/*/
 
 firstBee
 .DS_Store
