@@ -10,6 +10,7 @@ import (
 	"time"
     "bufio"
 	"encoding/base64"
+	"os"
 )
 
 type UploadController struct {
@@ -56,8 +57,17 @@ func (this *UploadController) UploadFile() {
 	}
 	defer file.Close()
 	//MONGODB_URI
-	client, err := mongo.NewClient(options.Client().ApplyURI("mongodb://mitsuru:masumotomitsuru0108@ds133137.mlab.com:33137/heroku_1vxk1j6t?retryWrites=false"))
-    if err != nil {
+	MangoUrl := os.Getenv("MONGODB_URI")
+    if MangoUrl == "" {
+        MONGODB :=os.Getenv("MONGODB")
+        DBUser := os.Getenv("DB_USER")
+        DBPass := os.Getenv("DB_PASS")
+        MangoUrl = "mongodb://" + DBUser + ":" + DBPass + "@" + MONGODB + "heroku_1vxk1j6t"
+    }
+    fmt.Println(MangoUrl)
+    //Connect to MangoDB MONGODB_URI
+	client, err := mongo.NewClient(options.Client().ApplyURI(MangoUrl+"?retryWrites=false"))
+	 if err != nil {
 		fmt.Println(err)
     }
     if err = client.Connect(context.Background()); err != nil {

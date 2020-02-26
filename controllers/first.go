@@ -35,7 +35,7 @@ func init() {
         DBPass := os.Getenv("DB_PASS")
         MangoUrl = "mongodb://" + DBUser + ":" + DBPass + "@" + MONGODB + "heroku_1vxk1j6t"
     }
-    
+    fmt.Println(MangoUrl)
     //Connect to MangoDB MONGODB_URI
     client, err := mongo.NewClient(options.Client().ApplyURI(MangoUrl+"?retryWrites=false"))
     if err != nil {

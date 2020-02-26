@@ -4,5 +4,4 @@
 firstBee
 .DS_Store
 .vscode/launch.json
-storage/gallery/*
 .env
