@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"github.com/abbot/go-http-auth"
+	auth "github.com/abbot/go-http-auth"
 	"github.com/astaxie/beego"
 )
 

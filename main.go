@@ -2,9 +2,10 @@ package main
 
 import (
 	_ "firstBee/routers"
-	"github.com/astaxie/beego"
 	"os"
 	"strconv"
+
+	"github.com/astaxie/beego"
 )
 
 func main() {

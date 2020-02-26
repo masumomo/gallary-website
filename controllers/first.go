@@ -3,12 +3,14 @@ package controllers
 import (
 	"context"
 	"fmt"
+	"os"
+	"time"
+
 	"github.com/astaxie/beego"
+	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
-	"os"
-	"time"
 )
 
 type FirstController struct {
@@ -26,12 +28,20 @@ type Photos []Photo
 var photos []Photo
 
 func init() {
-	MangoUrl := os.Getenv("MONGODB_URI")
+	// cwd, err := os.Getwd()
+	// fmt.Println(cwd)
+	// fmt.Println(err)
+	fmt.Println(fmt.Sprintf("../.env", os.Getenv("GO_ENV")))
+	err := godotenv.Load()
+	if err != nil {
+		fmt.Println("Error loading .env file")
+	}
 	if MangoUrl == "" {
+		fmt.Println("MangoUrl is empty")
 		MONGODB := os.Getenv("MONGODB")
-		DBUser := os.Getenv("MONGO_DB_USER")
-		DBPass := os.Getenv("MONGO_DB_PASS")
-		MangoUrl = "mongodb://" + DBUser + ":" + DBPass + "@" + MONGODB + "heroku_1vxk1j6t"
+		DBUser := os.Getenv("MONGOD_DB_USER")
+		DBPass := os.Getenv("MONGOD_DB_PASS")
+		MangoUrl = "mongodb://" + DBUser + ":" + DBPass + MONGODB + "heroku_1vxk1j6t"
 	}
 	fmt.Println(MangoUrl)
 	//Connect to MangoDB MONGODB_URI
