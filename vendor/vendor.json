@@ -782,6 +782,6 @@
   ],
   "rootPath": "firstBee",
   "heroku": {
-    "goVersion": "go1.13.8"
+    "install": ["./..."]
   }
 }
