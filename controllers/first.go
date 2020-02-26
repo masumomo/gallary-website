@@ -1,48 +1,61 @@
 package controllers
 
 import (
-    "fmt"
     "github.com/astaxie/beego"
-    "io/ioutil"
-    "bufio"
-    "encoding/base64"
+    "time"
+    "fmt"
     "os"
+    "go.mongodb.org/mongo-driver/bson"
+    "go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
+	"context"
 )
 
 type FirstController struct {
     beego.Controller
 }
 
+
 type Photo struct {
-    ID int `json:"id"`
-    Name string `json:"name"`
-    Src string `json:"src"`
+    Name string
+    Src string
+    Date time.Time
 }
+
 
 type Photos []Photo
 
 var photos []Photo
 
 func init() {
-    files, _ := ioutil.ReadDir("./storage/gallery")
-    files1, _ := ioutil.ReadDir(".")
-    files2, _ := ioutil.ReadDir("./storage")
-    fmt.Println(files)
-    fmt.Println(files1)
-    fmt.Println(files2)
-    for _, file := range files {
-        filename := file.Name()
-        f, err := os.Open("./storage/gallery/" + filename) 
-        reader := bufio.NewReader(f)
-        content, _ := ioutil.ReadAll(reader)
-        encoded := base64.StdEncoding.EncodeToString(content)
-        defer f.Close()
-        if err != nil {
-            return
-        }
-        fmt.Println(filename)
-        photos = append(photos,Photo{ID: 1, Name: filename, Src: encoded})
+    MangoUrl := os.Getenv("MONGODB_URI")
+    if MangoUrl == "" {
+        MONGODB :=os.Getenv("MONGODB")
+        DBUser := os.Getenv("DB_USER")
+        DBPass := os.Getenv("DB_PASS")
+        MangoUrl = "mongodb://" + DBUser + ":" + DBPass + "@" + MONGODB + "heroku_1vxk1j6t"
+    }
+    
+    //Connect to MangoDB MONGODB_URI
+    client, err := mongo.NewClient(options.Client().ApplyURI(MangoUrl+"?retryWrites=false"))
+    if err != nil {
+		fmt.Println(err)
+    }
+    if err = client.Connect(context.Background()); err != nil {
+		fmt.Println(err)
+    }
+    defer client.Disconnect(context.Background())
+	col := client.Database("heroku_1vxk1j6t").Collection("photos")
+	ctx, _ := context.WithTimeout(context.Background(), 30*time.Second)
+    cur, err := col.Find(context.Background(), bson.D{})
+    if err != nil { fmt.Println(err) }
+    defer cur.Close(ctx)
+    for cur.Next(ctx) {
+        var result Photo
+        err := cur.Decode(&result)
+        if err != nil { fmt.Println(err) }
 
+        photos = append(photos,result)
     }
 }
 
