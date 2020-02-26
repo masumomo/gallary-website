@@ -53,16 +53,18 @@ func (this *UploadController) UploadFile() {
 		fmt.Println(err)
 	}
 	defer file.Close()
-	//MONGODB_URI
+
 	MangoUrl := os.Getenv("MONGODB_URI")
+	MONGODB := os.Getenv("MONGODB")
+	DBUser := os.Getenv("MONGODB_USER")
+	DBPass := os.Getenv("MONGODB_PASS")
+	DBName := os.Getenv("MONGODB_NAME")
 	if MangoUrl == "" {
-		MONGODB := os.Getenv("MONGODB")
-		DBUser := os.Getenv("MONGO_DB_USER")
-		DBPass := os.Getenv("MONGO_DB_PASS")
-		MangoUrl = "mongodb://" + DBUser + ":" + DBPass + "@" + MONGODB + "heroku_1vxk1j6t"
+		fmt.Println("MangoUrl is empty")
+		MangoUrl = "mongodb://" + DBUser + ":" + DBPass + MONGODB + DBName
 	}
 	fmt.Println(MangoUrl)
-	//Connect to MangoDB MONGODB_URI
+	//Connect to MangoDB
 	client, err := mongo.NewClient(options.Client().ApplyURI(MangoUrl + "?retryWrites=false"))
 	if err != nil {
 		fmt.Println(err)
@@ -72,7 +74,7 @@ func (this *UploadController) UploadFile() {
 	}
 	defer client.Disconnect(context.Background())
 
-	col := client.Database("heroku_1vxk1j6t").Collection("photos")
+	col := client.Database(DBName).Collection("photos")
 
 	doc := Photo{
 		fileTitle,

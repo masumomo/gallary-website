@@ -37,15 +37,16 @@ func init() {
 		fmt.Println("Error loading .env file")
 	}
 	MangoUrl := os.Getenv("MONGODB_URI")
+	MONGODB := os.Getenv("MONGODB")
+	DBUser := os.Getenv("MONGODB_USER")
+	DBPass := os.Getenv("MONGODB_PASS")
+	DBName := os.Getenv("MONGODB_NAME")
 	if MangoUrl == "" {
 		fmt.Println("MangoUrl is empty")
-		MONGODB := os.Getenv("MONGODB")
-		DBUser := os.Getenv("MONGOD_DB_USER")
-		DBPass := os.Getenv("MONGOD_DB_PASS")
-		MangoUrl = "mongodb://" + DBUser + ":" + DBPass + MONGODB + "heroku_1vxk1j6t"
+		MangoUrl = "mongodb://" + DBUser + ":" + DBPass + MONGODB + DBName
 	}
 	fmt.Println(MangoUrl)
-	//Connect to MangoDB MONGODB_URI
+	//Connect to MangoDB
 	client, err := mongo.NewClient(options.Client().ApplyURI(MangoUrl + "?retryWrites=false"))
 	if err != nil {
 		fmt.Println(err)
@@ -54,7 +55,7 @@ func init() {
 		fmt.Println(err)
 	}
 	defer client.Disconnect(context.Background())
-	col := client.Database("heroku_1vxk1j6t").Collection("photos")
+	col := client.Database(DBName).Collection("photos")
 	ctx, _ := context.WithTimeout(context.Background(), 30*time.Second)
 	cur, err := col.Find(context.Background(), bson.D{})
 	if err != nil {
