@@ -5,6 +5,7 @@
   </head>
   <body>
     <h1>Hello World</h1>
+    <a href="./login">Login</a>
     <table border="1" style="width:100%;">
       	{{ with .Photos }}
           {{ range . }}

@@ -84,6 +84,8 @@ func (this *UploadController) UploadFile() {
 	if _, err = col.InsertOne(context.Background(), doc); err != nil {
 		fmt.Println(err)
 	}
-	this.Ctx.ResponseWriter.WriteHeader(200)
-	fmt.Fprintf(this.Ctx.ResponseWriter, "Successfully Uploaded File\n")
+
+	photos = append(photos, doc)
+	fmt.Println("Successfully Uploaded File")
+	this.Redirect("/", 302)
 }
