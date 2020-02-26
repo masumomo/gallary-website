@@ -1,6 +1,5 @@
 /vendor/github*
-/vendor/golang*
-/vendor/gopkg*
+/vendor/go*
 
 firstBee
 .DS_Store
