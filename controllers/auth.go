@@ -1,10 +1,9 @@
 package controllers
 
 import (
-	"github.com/astaxie/beego"
 	"github.com/abbot/go-http-auth"
+	"github.com/astaxie/beego"
 )
-
 
 func Secret(user, realm string) string {
 	if user == "john" {

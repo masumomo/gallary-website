@@ -1,27 +1,23 @@
 package controllers
 
 import (
-    "fmt"
-	"io/ioutil"
-	"github.com/astaxie/beego"
-    "go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
+	"bufio"
 	"context"
-	"time"
-    "bufio"
 	"encoding/base64"
+	"fmt"
+	"github.com/astaxie/beego"
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
+	"io/ioutil"
 	"os"
+	"time"
 )
 
 type UploadController struct {
-    beego.Controller
+	beego.Controller
 }
 
-
-
-
-
-func (this *UploadController) UploadFile() { 
+func (this *UploadController) UploadFile() {
 
 	fmt.Println("File Upload Endpoint Hit")
 	// Parse our multipart form, 10 << 20 specifies a maximum
@@ -30,7 +26,7 @@ func (this *UploadController) UploadFile() {
 	// FormFile returns the first file for the given key `myFile`
 	// it also returns the FileHeader so we can get the Filename,
 	// the Header and the size of the file
-	file, handler, err :=  this.Ctx.Request.FormFile("myFile")
+	file, handler, err := this.Ctx.Request.FormFile("myFile")
 	if err != nil {
 		fmt.Println("Error Retrieving the File")
 		fmt.Println(err)
@@ -40,7 +36,7 @@ func (this *UploadController) UploadFile() {
 	fmt.Printf("Uploaded File: %+v\n", handler.Filename)
 	fmt.Printf("File Size: %+v\n", handler.Size)
 	fmt.Printf("MIME Header: %+v\n", handler.Header)
-	fileTitle :=  handler.Filename;
+	fileTitle := handler.Filename
 	// tempFile, err := ioutil.TempFile("", "upload-*.png")
 
 	reader := bufio.NewReader(file)
@@ -58,33 +54,33 @@ func (this *UploadController) UploadFile() {
 	defer file.Close()
 	//MONGODB_URI
 	MangoUrl := os.Getenv("MONGODB_URI")
-    if MangoUrl == "" {
-        MONGODB :=os.Getenv("MONGODB")
-        DBUser := os.Getenv("MONGO_DB_USER")
-        DBPass := os.Getenv("MONGO_DB_PASS")
-        MangoUrl = "mongodb://" + DBUser + ":" + DBPass + "@" + MONGODB + "heroku_1vxk1j6t"
-    }
-    fmt.Println(MangoUrl)
-    //Connect to MangoDB MONGODB_URI
-	client, err := mongo.NewClient(options.Client().ApplyURI(MangoUrl+"?retryWrites=false"))
-	 if err != nil {
+	if MangoUrl == "" {
+		MONGODB := os.Getenv("MONGODB")
+		DBUser := os.Getenv("MONGO_DB_USER")
+		DBPass := os.Getenv("MONGO_DB_PASS")
+		MangoUrl = "mongodb://" + DBUser + ":" + DBPass + "@" + MONGODB + "heroku_1vxk1j6t"
+	}
+	fmt.Println(MangoUrl)
+	//Connect to MangoDB MONGODB_URI
+	client, err := mongo.NewClient(options.Client().ApplyURI(MangoUrl + "?retryWrites=false"))
+	if err != nil {
 		fmt.Println(err)
-    }
-    if err = client.Connect(context.Background()); err != nil {
+	}
+	if err = client.Connect(context.Background()); err != nil {
 		fmt.Println(err)
-    }
-    defer client.Disconnect(context.Background())
+	}
+	defer client.Disconnect(context.Background())
 
 	col := client.Database("heroku_1vxk1j6t").Collection("photos")
-	
+
 	doc := Photo{
-        fileTitle,
-        encoded,
-        time.Now(),
-    }
-	if  _, err =  col.InsertOne(context.Background(), doc); err != nil {
+		fileTitle,
+		encoded,
+		time.Now(),
+	}
+	if _, err = col.InsertOne(context.Background(), doc); err != nil {
 		fmt.Println(err)
-    }
-    this.Ctx.ResponseWriter.WriteHeader(200)
+	}
+	this.Ctx.ResponseWriter.WriteHeader(200)
 	fmt.Fprintf(this.Ctx.ResponseWriter, "Successfully Uploaded File\n")
 }
