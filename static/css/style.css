@@ -19,18 +19,13 @@ body {
   background: white;
 }
 
-.footer {
-  /* background: lightgreen; */
-  border: 1px lightgreen solid;
-}
-
 .main {
   text-align: left;
   background: #dddddd;
 }
 
 .aside-1 {
-  background: grey;
+  background: #dddddd;
 }
 
 @media all and (min-width: 600px) {

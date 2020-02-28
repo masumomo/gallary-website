@@ -33,11 +33,22 @@
       </div>
 
       <aside class="aside aside-1">
-        <div class="card">
+        <div class="card" data-aos="flip-left">
           <div class="card-body">
-            <h5 class="card-title">Something!</h5>
+            <h5 class="card-title" >About me</h5>
             <p class="card-text">With supporting text below as a natural lead-in to additional content. buraburaburabura...</p>
             <a href="#" class="btn btn-outline-dark">Go somewhere</a>
+          </div>
+        </div>
+        <div class="card" data-aos="flip-left">
+          <div class="card-body">
+            <h5 class="card-title">Contact information</h5>
+            <p class="card-text">
+              <address>
+                <strong>Email</strong><br>
+                <a href="mailto:#">xxxxmasumoto.mitsuru@example.com</a>
+              </address>
+            </p>
           </div>
         </div>
       </aside>
